@@ -51,7 +51,10 @@ dependencies {
 }
 
 test {
-    useTestNG()
+    useTestNG() {
+        parallel = 'tests'
+        threadCount = 2
+    }
     jvmArgs = [ "-javaagent:${configurations.agent.singleFile}" ]
 }
 

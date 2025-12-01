@@ -1,5 +1,6 @@
 import io.cucumber.testng.CucumberOptions;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 @CucumberOptions(
@@ -16,5 +17,11 @@ public class CucumberTestRunner extends AbstractTestNGCucumberTests {
     @Test
     public void runCucumber() {
         // This will run the Cucumber tests with TestNG
+    }
+
+    @Override
+    @DataProvider(parallel = true)  // <<< enables scenario-level parallelism
+    public Object[][] scenarios() {
+        return super.scenarios();
     }
 }

@@ -10,9 +10,10 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 public class LoginPage extends BasePage {
 
-    public static final By USERNAME_INPUT = By.cssSelector("[data-test='username']");
-    public static final By PASSWORD_INPUT = By.cssSelector("[data-test='password']");
-    public static final By LOGIN_BUTTON = By.cssSelector("[data-test='login-button']");
+    private By usernameInput = By.cssSelector("[data-test='username']");
+    private By passwordInput = By.cssSelector("[data-test='password']");
+    private By loginButton = By.cssSelector("[data-test='login-button']");
+    private By errorMessage = By.cssSelector("[data-test='error']");
 
     public LoginPage(WebDriver driver) {
         super(driver);
@@ -20,12 +21,12 @@ public class LoginPage extends BasePage {
 
     public void typeUsernameAndPassword(String username, String password) {
         log.info("Type {} in username and {} in password input fields.", username, password);
-        getWebElementByLocator(USERNAME_INPUT).sendKeys(username);
-        getWebElementByLocator(PASSWORD_INPUT).sendKeys(password);
+        getWebElementByLocator(usernameInput).sendKeys(username);
+        getWebElementByLocator(passwordInput).sendKeys(password);
     }
 
     public void clickOnLoginButton() {
         log.info("Clicking on login button.");
-        getWebElementByLocator(LOGIN_BUTTON).click();
+        getWebElementByLocator(loginButton).click();
     }
 }

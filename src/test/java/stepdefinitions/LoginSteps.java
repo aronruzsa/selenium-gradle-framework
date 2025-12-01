@@ -11,7 +11,7 @@ import io.cucumber.java.en.When;
 import pages.LoginPage;
 
 public class LoginSteps {
-    private LoginPage loginPage = new LoginPage(getDriver());
+    private final LoginPage loginPage = new LoginPage(getDriver());
 
     @Given("the user goes to the login page")
     public void theUserGoesToTheLoginPage() {
@@ -40,5 +40,12 @@ public class LoginSteps {
             softly.assertThat(actualTitle).isEqualTo(expectedTitle);
         });
     }
+
+    @Then("the user should be able to see {string} error message")
+    public void theUserShouldBeAbleToSeeErrorMessage(String expectedErrorMessage) {
+        String actualErrorMessage = loginPage.getWebElementByLocator(loginPage.getErrorMessage()).getText();
+        assertThat(actualErrorMessage).isEqualTo(expectedErrorMessage);
+    }
+
 
 }

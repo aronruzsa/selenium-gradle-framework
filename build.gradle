@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'io.qameta.allure' version '3.0.1'
 }
 
 group = 'selenium-gradle-framework'
@@ -10,13 +11,67 @@ repositories {
 }
 
 ext {
+    allureVersion = '2.24.0'
+    aspectJVersion = "1.9.20.1"
+    assertJVersion = '3.27.6'
+    cucumberVersion = '7.32.0'
+    lombokVersion = '1.18.42'
+    seleniumVersion = '4.38.0'
+    slf4jVersion = '2.0.17'
     testNGVersion = '7.11.0'
 }
 
+configurations {
+    agent {
+        canBeResolved = true
+        canBeConsumed = true
+    }
+}
+
 dependencies {
-    testImplementation "org.testng:testng:${testNGVersion}"
+    // Test runner
+    testImplementation "org.testng:testng:$testNGVersion"
+    // UI automation
+    testImplementation "org.seleniumhq.selenium:selenium-java:$seleniumVersion"
+    // BDD
+    testImplementation "io.cucumber:cucumber-java:$cucumberVersion"
+    testImplementation "io.cucumber:cucumber-testng:$cucumberVersion"
+    // Assertion
+    testImplementation "org.assertj:assertj-core:$assertJVersion"
+    // Logger
+    implementation "org.slf4j:slf4j-api:$slf4jVersion"
+    // Lombok
+    testCompileOnly("org.projectlombok:lombok:$lombokVersion")
+    testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
+    // Reporter
+    testImplementation platform("io.qameta.allure:allure-bom:$allureVersion")
+    testImplementation "io.qameta.allure:allure-cucumber7-jvm"
+    testImplementation "io.qameta.allure:allure-testng"
+    agent "org.aspectj:aspectjweaver:$aspectJVersion"
 }
 
 test {
     useTestNG()
+    jvmArgs = [ "-javaagent:${configurations.agent.singleFile}" ]
+}
+
+allure {
+    version = allureVersion
+    adapter {
+        frameworks {
+            cucumber7 {
+                enabled = true
+            }
+            testng {
+                enabled = true
+            }
+        }
+    }
+    report {
+        dependencies {
+            allureRawResultElements(
+                    files(layout.buildDirectory.dir('allure-results').get().asFile)
+            )
+        }
+    }
 }

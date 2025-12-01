@@ -10,7 +10,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Start testing...'
-                sh './gradlew clean test'
+                sh './gradlew test'
             }
         }
     }

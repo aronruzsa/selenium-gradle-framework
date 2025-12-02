@@ -43,7 +43,7 @@ public class LoginSteps {
 
     @Then("the user should be able to see {string} error message")
     public void theUserShouldBeAbleToSeeErrorMessage(String expectedErrorMessage) {
-        String actualErrorMessage = loginPage.getWebElementByLocator(loginPage.getErrorMessage()).getText();
+        String actualErrorMessage = loginPage.getErrorMessageText();
         assertThat(actualErrorMessage).isEqualTo(expectedErrorMessage);
     }
 

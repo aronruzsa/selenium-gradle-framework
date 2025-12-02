@@ -15,6 +15,7 @@ ext {
     aspectJVersion = "1.9.20.1"
     assertJVersion = '3.27.6'
     cucumberVersion = '7.32.0'
+    log4jVersion = '2.25.2'
     lombokVersion = '1.18.42'
     seleniumVersion = '4.38.0'
     slf4jVersion = '2.0.17'
@@ -40,6 +41,9 @@ dependencies {
     testImplementation "org.assertj:assertj-core:$assertJVersion"
     // Logger
     implementation "org.slf4j:slf4j-api:$slf4jVersion"
+    testImplementation "org.apache.logging.log4j:log4j-core:$log4jVersion"
+    testImplementation "org.apache.logging.log4j:log4j-api:$log4jVersion"
+    testImplementation "org.apache.logging.log4j:log4j-slf4j2-impl:$log4jVersion"
     // Lombok
     testCompileOnly("org.projectlombok:lombok:$lombokVersion")
     testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
@@ -56,6 +60,10 @@ test {
         threadCount = 2
     }
     jvmArgs = [ "-javaagent:${configurations.agent.singleFile}" ]
+    testLogging {
+        showStandardStreams = true
+        events "passed", "failed", "skipped"
+    }
 }
 
 allure {

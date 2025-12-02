@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class BasePage {
+public abstract class BasePage {
     private final WebDriver driver;
     private final WebDriverWait wait;
 
@@ -22,7 +22,7 @@ public class BasePage {
         return driver.findElement(locator);
     }
 
-    public void waitUntilElementIsVisible(By locator) {
+    protected void waitUntilElementIsVisible(By locator) {
         WebElement element = driver.findElement(locator);
         wait.until(ExpectedConditions.visibilityOf(element));
     }

@@ -22,4 +22,4 @@ The framework uses the Maven Failsafe plugin, so the command will be `./gradlew 
 
 ### Generate test report
 
-Once the run has concluded, use `./gradlew allureServe`.
+Once the run has concluded, use `./gradlew allureServeLocal`.

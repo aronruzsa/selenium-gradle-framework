@@ -78,11 +78,19 @@ allure {
             }
         }
     }
-    report {
-        dependencies {
-            allureRawResultElements(
-                    files(layout.buildDirectory.dir('allure-results').get().asFile)
-            )
-        }
+}
+
+tasks.register('allureServeLocal', Exec) {
+    dependsOn 'downloadAllure'
+
+    def allureBinary = layout.buildDirectory.file("allure/commandline/bin/allure")
+    def resultsDir   = layout.buildDirectory.dir("allure-results")
+
+    doFirst {
+        commandLine allureBinary.get().asFile.absolutePath,
+                "serve",
+                "--host", "127.0.0.1",
+                "--port", "54545",
+                resultsDir.get().asFile.absolutePath
     }
 }
